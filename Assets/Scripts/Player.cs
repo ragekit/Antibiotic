@@ -8,9 +8,14 @@ public class Player : Circle {
 	internal PlayerStage parent;
 	internal int playerNb;
 	
+
+	Serial serial;
 	
 	// Use this for initialization
 	void Start () {
+
+		serial = GameObject.Find("GameDirector").GetComponent<Serial>();
+
 	}
 	
 	// Update is called once per frame
@@ -33,6 +38,8 @@ public class Player : Circle {
 	
 	void processInput()
 	{
-		setRadius(ArduinoHandler.Instance.potValues[playerNb-1]*2);
+		float potValue = serial.potValues[playerNb-1];
+		setRadius(potValue*2);
+		//setRadius(ArduinoHandler.Instance.potValues[playerNb-1]*2);
 	}
 }
