@@ -3,11 +3,14 @@ using System.Collections;
 
 public class Player : Circle {
 	
-	float maxScale;
-	float minScale;
-	internal PlayerStage parent;
 	internal int playerNb;
 	
+	PlayerStage ps;
+	string parentName;
+	Circle outer;
+	Circle center;
+	
+	public float speed;
 
 	Serial serial;
 	
@@ -15,31 +18,64 @@ public class Player : Circle {
 	void Start () {
 
 		serial = GameObject.Find("GameDirector").GetComponent<Serial>();
+		
+		parentName = transform.parent.gameObject.name;
+		
+		ps = transform.parent.gameObject.GetComponent<PlayerStage>();
+		
+		outer = GameObject.Find (parentName + "/outer").GetComponent<Circle>();
+		center = GameObject.Find (parentName + "/center").GetComponent<Circle>();
 
 	}
 	
 	// Update is called once per frame
 	void Update () {	
-		processInput();
+		//processInput();
+		keyboardInput();
 	}
+	
 	
 	public bool isTouchingBorder()
 	{
-		maxScale = parent.outer.getRadius();
-		minScale = parent.center.getRadius();
-		float scale = transform.localScale.x;
-		
-		if(scale > maxScale || scale < minScale) 
-		{
+		if(getRadius() > outer.getRadius() || getRadius() < center.getRadius()){
 			return true;
 		}
+		
 		return false;
 	}
+	
 	
 	void processInput()
 	{
 		float potValue = serial.potValues[playerNb-1];
 		setRadius(potValue*2);
 		//setRadius(ArduinoHandler.Instance.potValues[playerNb-1]*2);
+	}
+	
+	
+	
+	void keyboardInput(){
+		//Player 1
+		if(!ps.gameover){
+			if(parentName == "PlayerOneStage"){
+				if(Input.GetKey("a")){
+					setRadius(getRadius() + speed);
+				}
+				if(Input.GetKey("s")){
+					setRadius(getRadius() - speed);
+				}
+			}
+			
+			//Player 2
+			if(parentName == "PlayerTwoStage"){
+				
+				if(Input.GetKey("j")){
+					setRadius(getRadius() + speed);
+				}
+				if(Input.GetKey("k")){
+					setRadius(getRadius() - speed);
+				}
+			}
+		}
 	}
 }
