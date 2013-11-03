@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Bonus : MonoBehaviour {
 	
+	public AudioClip die;
+	
+	bool dead;
 	Player player;
 	Circle outer;
 	PlayerStage stage;
@@ -46,6 +49,8 @@ public class Bonus : MonoBehaviour {
 		
 		speed = Random.Range(0.25f, 1.0f);
 		speed2 = Random.Range(0.001f, 0.005f);
+		
+		dead = false;
 	}
 	
 	// Update is called once per frame
@@ -60,10 +65,13 @@ public class Bonus : MonoBehaviour {
 			float dist = Vector3.Distance(transform.position, new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z));
 			
 			//Si collision, supprime l'objet et augmente le score
-			if(player.getRadius()/2 > dist-0.01f && player.getRadius()/2 < dist+0.01f){
+			if(player.getRadius()/2 > dist-0.01f && player.getRadius()/2 < dist+0.01f && !dead){
+				dead = true;
+				renderer.enabled = false;
+				audio.PlayOneShot(die);
 				PlayerStage ps = GameObject.Find(gameObject.transform.parent.name).GetComponent<PlayerStage>();
 				ps.score += 10;
-				Destroy(gameObject);
+				Destroy(gameObject, die.length); //Attends que le son ait fini de jouer pour la destruction
 			}
 			
 			

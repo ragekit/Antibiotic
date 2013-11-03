@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+[RequireComponent(typeof(AudioSource))]
 public class Game : MonoBehaviour {
 
 	//MAIN GAME CLASS WITH GAMELOOP, game behavior

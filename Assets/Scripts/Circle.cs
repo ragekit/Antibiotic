@@ -20,6 +20,6 @@ public class Circle : MonoBehaviour {
 	
 	public void setRadius(float value)
 	{
-		transform.localScale = new Vector3(value,1,value);
+		transform.localScale = new Vector3(value,value,1);
 	}
 }
