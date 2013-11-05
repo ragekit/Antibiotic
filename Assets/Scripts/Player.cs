@@ -5,7 +5,7 @@ public class Player : Circle {
 	
 	internal int playerNb;
 	
-	PlayerStage ps;
+	Game game;
 	string parentName;
 	Circle outer;
 	Circle center;
@@ -18,10 +18,9 @@ public class Player : Circle {
 	void Start () {
 
 		serial = GameObject.Find("GameDirector").GetComponent<Serial>();
+		game = GameObject.Find("GameDirector").GetComponent<Game>();
 		
 		parentName = transform.parent.gameObject.name;
-		
-		ps = transform.parent.gameObject.GetComponent<PlayerStage>();
 		
 		outer = GameObject.Find (parentName + "/outer").GetComponent<Circle>();
 		center = GameObject.Find (parentName + "/center").GetComponent<Circle>();
@@ -56,7 +55,7 @@ public class Player : Circle {
 	
 	void keyboardInput(){
 		//Player 1
-		if(!ps.gameover){
+		if(!game.gameover){
 			if(parentName == "PlayerOneStage"){
 				if(Input.GetKey("a")){
 					setRadius(getRadius() + speed);
