@@ -12,6 +12,7 @@ public class Game : MonoBehaviour {
 	[HideInInspector]
 	public bool gameover;
 	
+	PlayerStage ps1, ps2;
 	float curTime;
 	
 	void Start () {
@@ -23,6 +24,9 @@ public class Game : MonoBehaviour {
 		score = 0;
 		
 		curTime = Time.time;
+		
+		ps1 = GameObject.Find("PlayerOneStage").GetComponent<PlayerStage>();
+		ps2 = GameObject.Find ("PlayerTwoStage").GetComponent<PlayerStage>();
 	}
 	
 	void Update () {
@@ -31,7 +35,15 @@ public class Game : MonoBehaviour {
 		
 		//Attends 3 sec. après le gameover pour passer à l'écran suivant
 		if(Time.time >= curTime + 3 && gameover){
+			
+			//TODO Asperger les 2 joueur
+			
 			//Sauve les deux scores en interne
+			Application.LoadLevel("ScoreScene");
+		}
+		
+		
+		if(ps1.end || ps2.end){
 			PlayerPrefs.SetInt("score", score);
 			Application.LoadLevel("SetScoreScene");
 		}
@@ -54,10 +66,6 @@ public class Game : MonoBehaviour {
 	void OnGameOver()
 	{
 		//ArduinoHandler.Instance.Splash();
-	}
-	
-	
-	void saveScore(){
 	}
 	
 	

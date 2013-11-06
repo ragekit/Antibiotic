@@ -4,6 +4,8 @@ ATA//BIT	700
 
 MMM//CCC	600
 
+aca//aaa	500
+
 MMM//CCC	500
 
 MMM//CCC	450
@@ -15,6 +17,4 @@ MMM//CCC	400
 lam//foa	390
 
 aab//aba	360
-
-MMM//CCC	350
 

@@ -60,6 +60,8 @@ public class WriteScore : MonoBehaviour {
 	
 	void keyboardInput(){
 		
+		//TODO Mapper le clavier sur le bouton arduino
+		
 		//Choisir une lettre - joueur 1
 		if(Input.GetKeyDown("a") && curItP1 < 3){
 			setPastChar(player1, curItP1);

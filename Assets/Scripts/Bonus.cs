@@ -9,6 +9,7 @@ public class Bonus : MonoBehaviour {
 	Player player;
 	Circle outer;
 	Game game;
+	PlayerStage ps;
 	float speed;
 	float speed2;
 	float angle;
@@ -23,6 +24,7 @@ public class Bonus : MonoBehaviour {
 		player = GameObject.Find(gameObject.transform.parent.name + "/player").GetComponent<Player>();
 		outer = GameObject.Find (gameObject.transform.parent.name + "/outer").GetComponent<Circle>();
 		game = GameObject.Find("GameDirector").GetComponent<Game>();
+		ps = transform.parent.GetComponent<PlayerStage>();
 		
 		/***
 		 * Pour rendre le jeu un peu dur et pas trop facile, soit on ajoute un bonus entre le centre et le bord
@@ -56,7 +58,7 @@ public class Bonus : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if(!game.gameover){
+		if(!game.gameover && !ps.end){
 			/*** Détection quand le joueur touche ce bonus
 			 * 
 			 * Si radius du cercle == distance centre au point
@@ -69,7 +71,6 @@ public class Bonus : MonoBehaviour {
 				dead = true;
 				renderer.enabled = false;
 				audio.PlayOneShot(die);
-				PlayerStage ps = GameObject.Find(gameObject.transform.parent.name).GetComponent<PlayerStage>();
 				game.score += 10;
 				Destroy(gameObject, die.length); //Attends que le son ait fini de jouer pour la destruction
 			}

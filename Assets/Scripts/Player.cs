@@ -5,6 +5,7 @@ public class Player : Circle {
 	
 	internal int playerNb;
 	
+	PlayerStage ps;
 	Game game;
 	string parentName;
 	Circle outer;
@@ -19,12 +20,12 @@ public class Player : Circle {
 
 		serial = GameObject.Find("GameDirector").GetComponent<Serial>();
 		game = GameObject.Find("GameDirector").GetComponent<Game>();
+		ps = transform.parent.GetComponent<PlayerStage>();
 		
 		parentName = transform.parent.gameObject.name;
 		
 		outer = GameObject.Find (parentName + "/outer").GetComponent<Circle>();
 		center = GameObject.Find (parentName + "/center").GetComponent<Circle>();
-
 	}
 	
 	// Update is called once per frame
@@ -54,14 +55,20 @@ public class Player : Circle {
 	
 	
 	void keyboardInput(){
+		
+		//TODO: Mapper le clavier sur le bouton arduino
+		
 		//Player 1
-		if(!game.gameover){
+		if(!game.gameover && !ps.end){
 			if(parentName == "PlayerOneStage"){
 				if(Input.GetKey("a")){
 					setRadius(getRadius() + speed);
 				}
-				if(Input.GetKey("s")){
+				else if(Input.GetKey("s")){
 					setRadius(getRadius() - speed);
+				}
+				else if(Input.GetKey("d")){
+					ps.end = true;
 				}
 			}
 			
@@ -71,8 +78,11 @@ public class Player : Circle {
 				if(Input.GetKey("j")){
 					setRadius(getRadius() + speed);
 				}
-				if(Input.GetKey("k")){
+				else if(Input.GetKey("k")){
 					setRadius(getRadius() - speed);
+				}
+				else if(Input.GetKey("l")){
+					ps.end = true;
 				}
 			}
 		}

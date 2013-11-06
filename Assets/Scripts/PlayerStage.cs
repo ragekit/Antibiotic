@@ -29,6 +29,9 @@ public class PlayerStage : MonoBehaviour {
 	
 	AudioSource beep;
 	
+	[HideInInspector]
+	public bool end;
+	
 	// Use this for initialization
 	void Start () {
 		
@@ -40,6 +43,8 @@ public class PlayerStage : MonoBehaviour {
 		style2.normal.textColor = Color.red;
 		style2.font = font;
 		style2.fontSize = 23;
+		
+		end = false;
 		
 		curTime = Time.time;
 		nextTime = Random.Range(nextPopMinT, nextPopMaxT);
@@ -59,15 +64,28 @@ public class PlayerStage : MonoBehaviour {
 			createBonus();
 		}
 		
+		
+		
+		/** iTween -> Doc http://itween.pixelplacement.com/documentation.php **/
+		//Tween pour cercle interne
+		iTween.ScaleFrom(center.gameObject, iTween.Hash("scale", new Vector3(0.0f, 0.0f, center.transform.localScale.z), 
+		"easeType", "easeInSine", "time", 3.0f, "looptype", "pingpong"));
+		
+		//Tween pour cercle externe
+		iTween.ScaleFrom(outer.gameObject, iTween.Hash("scale", new Vector3(1.3f, 1.3f, center.transform.localScale.z), 
+		"easeType", "easeInSine", "time", 4.0f, "looptype", "pingpong"));
+		
 	}
 	
 	
 	// Update is called once per frame
 	void Update () {
-		if(!gameMain.gameover){
+		
+		if(!gameMain.gameover && !end){
 			
+			/* Version de base */
 			//Fais bouger les cercles
-			t += Time.deltaTime/1f;					//Vitesse de mouvement du cercle
+			/*t += Time.deltaTime/1f;					//Vitesse de mouvement du cercle
 			t2 += Time.deltaTime/.8f;
 			
 			float mod = Mathf.Sin(t)/3f-.23F;	
@@ -76,7 +94,10 @@ public class PlayerStage : MonoBehaviour {
 			
 			mod = Mathf.Sin(t2)/5.0f;				//Taille max atteint par le cercle
 			rad = outerBaseScale + mod;
-			outer.setRadius(rad);
+			outer.setRadius(rad);*/
+			
+			
+			/* Le tween est initié dans le Start() */
 			
 			
 			//Map le pitch du son d'après la distance du joueur à l'un des 2 cercles

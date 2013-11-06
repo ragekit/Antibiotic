@@ -35,6 +35,9 @@ public class MenuToGame : MonoBehaviour {
 			time = Time.time;
 		}
 		else if(startSwitch && Time.time >= time + 2){
+			//Destroy le singleton
+			GameObject music = GameObject.Find("GameMusic");
+			DestroyImmediate(music);
 			Application.LoadLevel("GameScene");
 		}
 	}

@@ -60,6 +60,9 @@ public class Menu : MonoBehaviour {
 	
 	
 	void keyboardInput(){
+		
+		//TODO: Mapper le clavier sur le bouton arduino
+		
 		if(Input.GetKey("d") && transform.name == "Logo"){
 			//Load jeu j1
 			start = true;
